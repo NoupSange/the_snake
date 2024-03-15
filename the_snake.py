@@ -19,16 +19,16 @@ LEFT = (-1, 0)
 RIGHT = (1, 0)
 
 # Цвет фона - черный:
-BOARD_BACKGROUND_COLOR = (0, 0, 0)
+BOARD_BACKGROUND_COLOR = (127, 127, 125)
 
 # Цвет границы ячейки
-BORDER_COLOR = (93, 216, 228)
+BORDER_COLOR = (17, 36, 28)
 
 # Цвет яблока
 APPLE_COLOR = (255, 0, 0)
 
 # Цвет змейки
-SNAKE_COLOR = (0, 255, 0)
+SNAKE_COLOR = (49, 102, 80)
 
 # Скорость движения змейки:
 SPEED = 20
@@ -55,6 +55,16 @@ class GameObject():
         """Метод отрисовки объекта."""
         pass
 
+    def draw_cell(self, x, y, cell_color, surface, cell_border=None):
+        """Закрашивает ячейку и бортик ячейки
+        по выбраннам цветам.
+        """
+        rect = (pygame.Rect((x, y), (GRID_SIZE, GRID_SIZE)))
+        pygame.draw.rect(surface, cell_color, rect)
+        if cell_border:
+            pygame.draw.rect(surface, cell_border, rect, 1)
+
+
 class Snake(GameObject):
     """Класс описывающий змейку."""
 
@@ -68,12 +78,15 @@ class Snake(GameObject):
         self.last = None
 
     def update_direction(self):
+        """Присваиает новое направление движения змеи
+        если была нажата клавиша в методе snake.handle_keys
+        """
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
     def move(self):
-        """"""
+        """Работает c атрибутом экземпляра класса self.positions."""
         x, y = self.get_head_position()
         dx, dy = self.direction
         x += dx * GRID_SIZE
@@ -98,36 +111,19 @@ class Snake(GameObject):
 
         # Проверка длины змейки
         if len(self.positions) > self.length:
-            self.last = self.positions.pop() 
-
+            self.last = self.positions.pop()
 
     def draw(self, surface):
-        """Метод отрисовки змейки."""
-        
+        """Отрисовывает змею."""
         # Закрашивает конец змейки, если яблоко не съедено
         if self.last:
-            last_rect = pygame.Rect(
-            (self.last[0], self.last[1]),
-            (GRID_SIZE, GRID_SIZE)
-            )
-            pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
+            self.draw_cell(self.last[0], self.last[1],
+                           BOARD_BACKGROUND_COLOR, surface)
 
         # Отрисовка всей змейки
-        if self.length == 1:
-                x, y = self.get_head_position()
-                rect = (pygame.Rect(
-                    (x, y), (GRID_SIZE, GRID_SIZE)))
-
-                pygame.draw.rect(surface, self.body_color, rect)
-                pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
-        else:
-            for position in self.positions:
-                rect = (
-                    pygame.Rect((position[0], position[1]), (GRID_SIZE, GRID_SIZE))
-                )
-                pygame.draw.rect(surface, self.body_color, rect)
-                pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
-
+        for position in self.positions:
+            self.draw_cell(position[0], position[1],
+                           self.body_color, screen, BORDER_COLOR)
 
     def get_head_position(self):
         """Возвращает позицию головы змейки"""
@@ -141,6 +137,24 @@ class Snake(GameObject):
         self.direction = choice(possible_directions)
         self.last = None
         screen.fill(BOARD_BACKGROUND_COLOR)
+
+    def handle_keys(self):
+        """Отслеживание нажатия кнопок направления движения змеи.
+        Отслеживание нажатия кнопки выхода из игры.
+        """
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and self.direction != DOWN:
+                    self.next_direction = UP
+                elif event.key == pygame.K_DOWN and self.direction != UP:
+                    self.next_direction = DOWN
+                elif event.key == pygame.K_LEFT and self.direction != RIGHT:
+                    self.next_direction = LEFT
+                elif event.key == pygame.K_RIGHT and self.direction != LEFT:
+                    self.next_direction = RIGHT
 
 
 class Apple(GameObject):
@@ -159,43 +173,22 @@ class Apple(GameObject):
         )
 
     def draw(self, surface):
-        rect = pygame.Rect(
-            (self.position[0], self.position[1]),
-            (GRID_SIZE, GRID_SIZE)
-        )
-        pygame.draw.rect(surface, self.body_color, rect)
-        pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
+        """Отрисовка яблока, для яблока
+        достаточно метода базового класса GameObject.
+        """
+        self.draw_cell(self.position[0], self.position[1],
+                       APPLE_COLOR, surface, BORDER_COLOR)
 
-
-def handle_keys(game_object):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            raise SystemExit
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
-            elif event.key == pygame.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
-            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
-            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
-            
 
 def main():
     """Создаем экземпляры змейки и яблока."""
     snake = Snake()
     apple = Apple()
-    print(snake.position)
     while True:
         clock.tick(SPEED)
-        handle_keys(snake)
+        snake.handle_keys()
         snake.update_direction()
         snake.move()
-        print('позиция змейки', snake.positions)
-        print('позиция яблока', apple.position)
-        print(snake.length)
         # проверка съедено ли яблоко
         if apple.position in snake.positions:
             snake.length += 1
@@ -206,4 +199,5 @@ def main():
 
 
 if __name__ == '__main__':
+    screen.fill(BOARD_BACKGROUND_COLOR)
     main()
