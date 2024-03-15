@@ -79,7 +79,7 @@ class Snake(GameObject):
 
     def update_direction(self):
         """Присваиает новое направление движения змеи
-        если была нажата клавиша в методе snake.handle_keys
+        если была нажата клавиша в функции handle_keys
         """
         if self.next_direction:
             self.direction = self.next_direction
@@ -138,24 +138,6 @@ class Snake(GameObject):
         self.last = None
         screen.fill(BOARD_BACKGROUND_COLOR)
 
-    def handle_keys(self):
-        """Отслеживание нажатия кнопок направления движения змеи.
-        Отслеживание нажатия кнопки выхода из игры.
-        """
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                raise SystemExit
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and self.direction != DOWN:
-                    self.next_direction = UP
-                elif event.key == pygame.K_DOWN and self.direction != UP:
-                    self.next_direction = DOWN
-                elif event.key == pygame.K_LEFT and self.direction != RIGHT:
-                    self.next_direction = LEFT
-                elif event.key == pygame.K_RIGHT and self.direction != LEFT:
-                    self.next_direction = RIGHT
-
 
 class Apple(GameObject):
     """Класс описывающий змейку."""
@@ -179,6 +161,23 @@ class Apple(GameObject):
         self.draw_cell(self.position[0], self.position[1],
                        APPLE_COLOR, surface, BORDER_COLOR)
 
+def handle_keys(self):
+    """Отслеживание нажатия кнопок направления движения змеи.
+    Отслеживание нажатия кнопки выхода из игры.
+    """
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            raise SystemExit
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP and self.direction != DOWN:
+                self.next_direction = UP
+            elif event.key == pygame.K_DOWN and self.direction != UP:
+                self.next_direction = DOWN
+            elif event.key == pygame.K_LEFT and self.direction != RIGHT:
+                self.next_direction = LEFT
+            elif event.key == pygame.K_RIGHT and self.direction != LEFT:
+                self.next_direction = RIGHT
 
 def main():
     """Создаем экземпляры змейки и яблока."""
@@ -186,7 +185,7 @@ def main():
     apple = Apple()
     while True:
         clock.tick(SPEED)
-        snake.handle_keys()
+        handle_keys(snake)
         snake.update_direction()
         snake.move()
         # проверка съедено ли яблоко
