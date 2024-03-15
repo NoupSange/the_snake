@@ -1,5 +1,0 @@
-x = -400
-SCREEN_WIDTH = 640
-SCREEN_HEIGTH = 480
-g = -20 % 360
-print(g)

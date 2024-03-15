@@ -102,12 +102,12 @@ class Snake(GameObject):
         elif y < 0:
             y = SCREEN_HEIGHT - GRID_SIZE
 
+        # Новая позиция головы змейки
+        self.positions.insert(0, (x, y))
+
         # Проверка на столкновние самой с собой
         if self.positions[0] in self.positions[2:]:
             self.reset()
-
-        # Новая позиция головы змейки
-        self.positions.insert(0, (x, y))
 
         # Проверка длины змейки
         if len(self.positions) > self.length:
