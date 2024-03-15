@@ -161,6 +161,7 @@ class Apple(GameObject):
         self.draw_cell(self.position[0], self.position[1],
                        APPLE_COLOR, surface, BORDER_COLOR)
 
+
 def handle_keys(self):
     """Отслеживание нажатия кнопок направления движения змеи.
     Отслеживание нажатия кнопки выхода из игры.
@@ -178,6 +179,7 @@ def handle_keys(self):
                 self.next_direction = LEFT
             elif event.key == pygame.K_RIGHT and self.direction != LEFT:
                 self.next_direction = RIGHT
+
 
 def main():
     """Создаем экземпляры змейки и яблока."""
