@@ -1,8 +1,7 @@
 from random import choice, randint
-
+from typing import Optional
 import pygame
 
-# Инициализация PyGame:
 pygame.init()
 
 # Константы для размеров поля и сетки:
@@ -44,7 +43,7 @@ clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры.
-class GameObject():
+class GameObject:
     """Базовый класс игры."""
 
     def __init__(self):
@@ -55,7 +54,8 @@ class GameObject():
         """Метод отрисовки объекта."""
         pass
 
-    def draw_cell(self, x, y, cell_color, surface, cell_border=None):
+    def draw_cell(self, x: int, y: int, cell_color: tuple[int, int, int],
+                  surface, cell_border: Optional[tuple[int, int, int]] = None):
         """Закрашивает ячейку и бортик ячейки
         по выбраннам цветам.
         """
@@ -125,7 +125,7 @@ class Snake(GameObject):
             self.draw_cell(position[0], position[1],
                            self.body_color, screen, BORDER_COLOR)
 
-    def get_head_position(self):
+    def get_head_position(self) -> list[tuple[int, int]]:
         """Возвращает позицию головы змейки"""
         return self.positions[0]
 
