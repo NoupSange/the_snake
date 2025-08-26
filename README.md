@@ -1,6 +1,21 @@
 # The Snake
+## Запуск игры
+  1. Клонируйте репозиторий.
+  2. Перейдите в дирекотрию проекта.
+  3. Создайте и активируйте виртуальное окружение, установите зависимости:
+     ```
+     python -m venv venv
+     
+     source venv/bin/activate (Linux)
+     или
+     source venv/Scripts/activate (Windows)
+     
+     pip install -r requirements.txt
+     ```
+  4. Запустите игру через терминал ```python the_snake.py``` или IDE.
+
 ### Описание
-Python ООП реализация классической игры **"Змейка" - the snake**.
+Python ООП реализация классической игры **"Змейка" - the snake** на библиотке ![Static Badge](https://img.shields.io/badge/pygame-b784a7?label=2.5.2).
 
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/145c2c5b-8bd3-4be3-a8a5-6da1067abe53" />
 
