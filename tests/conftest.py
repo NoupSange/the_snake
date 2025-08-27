@@ -26,7 +26,7 @@ TIMEOUT_ASSERT_MSG = (
 
 
 def import_the_snake():
-    import the_snake  # noqa
+    import the_snake
 
 
 @pytest.fixture(scope='session')
