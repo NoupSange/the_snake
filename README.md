@@ -15,6 +15,10 @@
   5. Запустите игру через терминал ```python the_snake.py``` или IDE.
      
 # The Snake V 1.0
+  4. Установите шрифты из папки fonts.
+  5. Запустите игру через терминал ```python the_snake.py``` или IDE.
+     
+# The Snake V 1.0
 ### Описание
 Python ООП реализация классической игры **"Змейка" - the snake** на библиотке ![Static Badge](https://img.shields.io/badge/pygame-b784a7?label=2.5.2).
 
@@ -50,4 +54,4 @@ Python ООП реализация классической игры **"Змей
 - добавлен класс GameState для хранения состояния игры
 - константы пересены в отдельный файл
 
-![the_snake animation](https://github.com/user-attachments/assets/c9e65a07-be95-4bdf-8ab6-eba8d1446380)
+<img src ="https://github.com/user-attachments/assets/c9e65a07-be95-4bdf-8ab6-eba8d1446380" width=400>
