@@ -18,7 +18,7 @@
 ### Описание
 Python ООП реализация классической игры **"Змейка" - the snake** на библиотке ![Static Badge](https://img.shields.io/badge/pygame-b784a7?label=2.5.2).
 
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/145c2c5b-8bd3-4be3-a8a5-6da1067abe53" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/c0ef1929-1425-4e57-8d87-b5e73bf7f909" />
 
 Игровое поле размером 640х480 поделено на клетки 20х20.
 Реализована логика при поедании яблок и столкновении головы змейки с её сегментом. Графический интерфейс написан на библиотеке Pygame.
